@@ -1,0 +1,15 @@
+# Build systems tests
+# Triggered by CI to ensure projects build
+
+trigger:
+  branches:
+    include:
+    - '*'
+    
+name: $(Date:yyyyMMdd)_$(SourceBranchName)$(Rev:.r)
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- template: build-steps.yml

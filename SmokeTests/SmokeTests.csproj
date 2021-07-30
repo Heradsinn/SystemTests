@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Atata" Version="1.11.0" />
+    <PackageReference Include="Atata.Bootstrap" Version="1.1.0" />
+    <PackageReference Include="Atata.WebDriverSetup" Version="1.1.0" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="FluentAssertions.Analyzers" Version="0.11.4" />
+    <PackageReference Include="Atata.KendoUI" Version="1.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.4" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.4" />
+    <PackageReference Include="coverlet.collector" Version="3.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Scrutor" Version="3.3.0" />
+    <PackageReference Include="VitesseSDK" Version="1.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="smoketestdata.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\CombinedImporterBatch.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\JournalImport.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

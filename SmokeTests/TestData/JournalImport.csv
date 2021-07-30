@@ -1,0 +1,2 @@
+Amount,AmountCreditOrDebit,DebitAccount,CreditAccount,PaymentReference,MerchantReference,Narrative,AccountEntryType,ValueDate,ERPCode
+2544,D,000000001020,000000007020,Wing,06/08/2015,Raberil BRL Payout batch 1 @ 3.2889 (USD 773.51),CompletedBankout,06/08/2015,033

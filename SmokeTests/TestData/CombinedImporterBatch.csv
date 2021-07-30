@@ -1,0 +1,2 @@
+SendCurrency,SendValue,ReceiveValue,RecipientName,RecipientCountry,RecipientCurrency,RecipientReference,RateGroupId,FundingType,RequestedValueDate,AccountIban,AccountNumber,AccountSortCode
+GBP,1,,Bilbo Baggins,GB,GBP,SmokeBatch,,Immediate,,,12341234,121212

@@ -1,0 +1,70 @@
+# Run automated tests
+# Triggered by AppVeyor webhook test run against given azure- env
+
+resources:
+  webhooks:
+    - webhook: AppVeyorTrigger
+      connection: AppVeyorConnection
+
+trigger: none
+
+variables:
+  avBuildVersion: ${{parameters.AppVeyorTrigger.build}}
+  azureBranch: ${{parameters.AppVeyorTrigger.branch}}
+  smUrl: ${{parameters.AppVeyorTrigger.smUrl}}
+  masUrl: ${{parameters.AppVeyorTrigger.masUrl}}
+  transactionApiUrl: ${{parameters.AppVeyorTrigger.transactionApiUrl}}
+  integrationApiUrl: ${{parameters.AppVeyorTrigger.integrationApiUrl}}
+  testTasksShouldRun: false
+    
+name: $(Date:yyyyMMdd)_$(avBuildVersion)_$(azureBranch)
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- template: build-steps.yml
+
+- task: PowerShell@2
+  condition: succeeded()
+  displayName: "Warm up azure apps"
+  inputs:
+    targetType: 'filePath'
+    filePath: '$(System.DefaultWorkingDirectory)\Scripts\WarmUpApps.ps1'
+
+- task: VSTest@2
+  displayName: "Run Web Smoke Tests"
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*SmokeTests.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+      !**\bin\**\ref\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    runSettingsFile: 'SmokeTests\RunSettings\WebTestSettings.runsettings'
+    overrideTestrunParameters: '-Env azure -Browser chrome -SmUrl $(smUrl) -MasUrl $(masUrl) -TransactionApiUrl $(transactionApiUrl)'
+    runInParralel: false
+    uiTests: true
+    testFiltercriteria: 'TestCategory=Mas|TestCategory=Sm'
+    testRunTitle: 'Web Smoke Tests - Chrome'
+    rerunFailedTests: true
+    rerunFailedThreshold: '20'
+    rerunMaxAttempts: '2'
+
+- task: VSTest@2
+  condition: and(succeededOrFailed(), eq(variables['testTasksShouldRun'], 'true'))
+  displayName: "Run API Smoke Tests"
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*SmokeTests.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+      !**\bin\**\ref\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    runSettingsFile: 'SmokeTests\RunSettings\ApiTestSettings.runsettings'
+    overrideTestrunParameters: '-Env azure -Browser chrome -SmUrl $(smUrl) -MasUrl $(masUrl) -TransactionApiUrl $(transactionApiUrl)'
+    runInParralel: false
+    testFiltercriteria: 'TestCategory=TransactionApi'
+    testRunTitle: 'API Smoke Tests'

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- Configurations that affect the Test Framework -->
+  <RunConfiguration>
+    <MaxCpuCount>1</MaxCpuCount>
+    <!-- Path relative to directory that contains .runsettings file-->
+    <!--<ResultsDirectory>.\TestResults</ResultsDirectory>-->
+  </RunConfiguration>
+
+  <!-- Parameters used by tests at run time -->
+  <TestRunParameters>
+    <!--Browser options: chrome, firefox, internetexplorer-->
+      <Parameter name="Browser" value="chrome" />
+    
+    <!--Urls can either be localhost host or azure-. If localhost the correct deployments db should be used.-->
+	  <Parameter name="SmUrl" value="https://localhost:44301" />
+	  <Parameter name="MasUrl" value="https://localhost:44302" />
+	  <Parameter name="TransactionApiUrl" value="https://localhost:44303" />
+  </TestRunParameters>
+
+  <!--Parallel tests - Workers should match MaxCpuCount above-->
+  <!--<MSTest>
+    <Parallelize>
+      <Workers>4</Workers>
+      <Scope>MethodLevel</Scope>
+    </Parallelize>
+  </MSTest>-->
+</RunSettings>
